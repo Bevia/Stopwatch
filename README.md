@@ -1,7 +1,7 @@
 # Stopwatch
 Stopwatch simple App
 
-Usage of fragment and onSaveInstanceState to safe states.
+Usage of fragment and onSaveInstanceState to safe states upon device rotation
 
           dependencies {
               compile fileTree(dir: 'libs', include: ['*.jar'])
