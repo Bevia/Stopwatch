@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("  Stopwatch");
+        getSupportActionBar().setTitle("  StopwatchFragment");
         toolbar.setSubtitle("   by Vincent Bevia");
 
-        fragment = new Stopwatch();
+        fragment = new StopwatchFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class Stopwatch extends Fragment {
+public class StopwatchFragment extends Fragment {
 
     @Bind(R.id.stopwatch_view)
     TextView stopwatchView;
@@ -55,10 +55,13 @@ public class Stopwatch extends Fragment {
 
         if(seconds > 0){
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
+            startButton.setText("Running");
         }if(onStop){
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
+            startButton.setText("Continue");
         }if(onReset){
-            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));}
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
+            startButton.setText("Start");}
 
         startButton.setOnClickListener((View view) -> {
             running = true;
