@@ -1,5 +1,5 @@
 # Stopwatch
-Stopwatch simple App
+Simple stopwatch App
 
 Usage of fragment and onSaveInstanceState to safe states upon device rotation
 
