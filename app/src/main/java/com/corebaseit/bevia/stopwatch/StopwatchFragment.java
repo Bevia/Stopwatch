@@ -61,9 +61,11 @@ public class StopwatchFragment extends Fragment {
         startButton.setOnClickListener((View view) -> {
             running = true;
             onStop = false;
+            stopButton.setEnabled(true);
+            resetButton.setEnabled(true);
+            startButton.setEnabled(false);
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
             startButton.setText("Running");
-            startButton.setEnabled(false);
         });
 
         stopButton.setOnClickListener((View view) -> {
@@ -79,9 +81,10 @@ public class StopwatchFragment extends Fragment {
             running = false;
             onReset = true;
             seconds = 0;
+            startButton.setEnabled(true);
+            stopButton.setEnabled(false);
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
             startButton.setText("Start");
-            startButton.setEnabled(true);
         });
     }
 
@@ -89,6 +92,8 @@ public class StopwatchFragment extends Fragment {
         if(seconds > 0){
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
             startButton.setText("Running");
+            stopButton.setEnabled(true);
+            resetButton.setEnabled(true);
         }if(seconds < 1){
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
             stopButton.setEnabled(false);
