@@ -58,9 +58,11 @@ public class StopwatchFragment extends Fragment {
     }
 
     private void uiLogic() {
+
         startButton.setOnClickListener((View view) -> {
             running = true;
             onStop = false;
+            onReset = false;
             stopButton.setEnabled(true);
             resetButton.setEnabled(true);
             startButton.setEnabled(false);
@@ -104,6 +106,8 @@ public class StopwatchFragment extends Fragment {
         }if(onReset){
             stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
             startButton.setText("Start");
+            stopButton.setEnabled(false);
+            resetButton.setEnabled(false);
         }
     }
 
