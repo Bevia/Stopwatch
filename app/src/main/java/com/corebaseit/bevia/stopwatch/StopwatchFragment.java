@@ -53,16 +53,11 @@ public class StopwatchFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(seconds > 0){
-            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
-            startButton.setText("Running");
-        }if(onStop){
-            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
-            startButton.setText("Continue");
-        }if(onReset){
-            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
-            startButton.setText("Start");}
+        logicStates();
+        uiLogic();
+    }
 
+    private void uiLogic() {
         startButton.setOnClickListener((View view) -> {
             running = true;
             onStop = false;
@@ -72,12 +67,12 @@ public class StopwatchFragment extends Fragment {
         });
 
         stopButton.setOnClickListener((View view) -> {
-            running = false;
-            onStop = true;
-            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
-            startButton.setText("Continue");
-            startButton.setEnabled(true);
 
+                running = false;
+                onStop = true;
+                stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
+                startButton.setText("Continue");
+                startButton.setEnabled(true);
         });
 
         resetButton.setOnClickListener((View view) -> {
@@ -88,6 +83,23 @@ public class StopwatchFragment extends Fragment {
             startButton.setText("Start");
             startButton.setEnabled(true);
         });
+    }
+
+    private void logicStates() {
+        if(seconds > 0){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
+            startButton.setText("Running");
+        }if(seconds < 1){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
+            stopButton.setEnabled(false);
+            resetButton.setEnabled(false);
+        }if(onStop){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
+            startButton.setText("Continue");
+        }if(onReset){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
+            startButton.setText("Start");
+        }
     }
 
     //Sets the number of seconds on the timer.
