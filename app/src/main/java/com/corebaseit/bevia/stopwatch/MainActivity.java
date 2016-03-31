@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,17 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("  Stopwatch");
         toolbar.setSubtitle("   by Vincent Bevia");
 
-
-        Fragment fragment = new Stopwatch();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
-
+        fragment = new Stopwatch();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, fragment, "stopwatch")
+                    .commit();
+        } else {
+            fragment = getSupportFragmentManager()
+                    .findFragmentByTag("stopwatch");
+        }
     }
 }

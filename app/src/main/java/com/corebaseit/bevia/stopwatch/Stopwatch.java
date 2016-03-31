@@ -2,21 +2,22 @@ package com.corebaseit.bevia.stopwatch;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Stopwatch extends Fragment {
 
+    @Bind(R.id.stopwatch_view)
+    TextView stopwatchView;
     @Bind(R.id.start_button)
     Button startButton;
     @Bind(R.id.stop_button)
@@ -24,17 +25,26 @@ public class Stopwatch extends Fragment {
     @Bind(R.id.reset_button)
     Button resetButton;
 
-
-    public Stopwatch() {
-        // Required empty public constructor
-    }
-
+    private int seconds = 0;
+    private boolean running;
+    private boolean notRunning;
+    private boolean onReset;
+    private boolean onStop;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_stopwatch, container, false);
+
+        if (savedInstanceState == null) {
+        }else{
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+            notRunning = savedInstanceState.getBoolean("notRunning");
+            onStop = savedInstanceState.getBoolean("onStop", onStop);
+            onReset = savedInstanceState.getBoolean("onReset", onReset);
+        }
+        runStopWatch();
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -43,21 +53,81 @@ public class Stopwatch extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if(seconds > 0){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
+        }if(onStop){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
+        }if(onReset){
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));}
 
         startButton.setOnClickListener((View view) -> {
-
-
+            running = true;
+            onStop = false;
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.indigo_900));
+            startButton.setText("Running");
+            startButton.setEnabled(false);
         });
 
         stopButton.setOnClickListener((View view) -> {
-
-
+            running = false;
+            onStop = true;
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_600));
+            startButton.setText("Continue");
+            startButton.setEnabled(true);
 
         });
 
         resetButton.setOnClickListener((View view) -> {
-
-
+            running = false;
+            onReset = true;
+            seconds = 0;
+            stopwatchView.setTextColor(ContextCompat.getColor(getActivity(), R.color.grey_300));
+            startButton.setText("Start");
+            startButton.setEnabled(true);
         });
+    }
+
+    //Sets the number of seconds on the timer.
+    private void runStopWatch() {
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3600) / 60;
+                int secs = seconds % 60;
+                String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+                stopwatchView.setText(time);
+                if (running) {
+                    seconds++;
+                }
+                handler.postDelayed(this, 1000);
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("notRunning", notRunning);
+        savedInstanceState.putBoolean("onStop", onStop);
+        savedInstanceState.putBoolean("onReset", onReset);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        notRunning = running;
+        running = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (notRunning) {
+            running = true;
+        }
     }
 }
