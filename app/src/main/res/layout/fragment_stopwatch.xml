@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/stop_button"
-        android:layout_marginTop="32dp"
         android:text="@string/start" />
 
     <Button
@@ -25,7 +24,6 @@
         android:layout_marginLeft="10dp"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
         android:text="@string/stop" />
 
     <Button
@@ -34,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/stop_button"
         android:layout_centerInParent="true"
-        android:layout_marginTop="17dp"
         android:text="@string/reset" />
 
 </RelativeLayout>
