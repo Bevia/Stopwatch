@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
     Fragment fragment;
 
     @Override
@@ -27,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("  StopwatchFragment");
         toolbar.setSubtitle("   by Vincent Bevia");
 
