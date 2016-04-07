@@ -1,6 +1,7 @@
 package com.corebaseit.bevia.stopwatch;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ public class StopwatchFragment extends Fragment {
     private boolean notRunning;
     private boolean onReset;
     private boolean onStop;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
